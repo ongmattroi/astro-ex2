@@ -1,0 +1,8 @@
+{
+  "commonError": {
+    "required": "{subject} required",
+    "minLength": "{subject} at least {length} characters",
+    "maxLength": "{subject} must be or more {length} characters",
+    "notMatch": "{subject} must contain at least 1 Uppercase, at least 1 lowercase, at least 1 number and at least 1 special case Character (!@#$%^&*)"
+  }
+}

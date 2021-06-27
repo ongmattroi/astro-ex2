@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model m_permission {
+  permission_id     String              @id @db.VarChar(50)
+  permission_name   String              @unique @db.VarChar(50)
+  m_role_permission m_role_permission[]
+}
+
+model m_position {
+  position_id     String            @id
+  position_name   String            @db.VarChar(50)
+  m_user_position m_user_position[]
+}
+
+model m_role {
+  role_id           String              @id @db.VarChar(50)
+  role_name         String              @unique @db.VarChar(50)
+  m_role_permission m_role_permission[]
+  m_user_role       m_user_role[]
+}
+
+model m_role_permission {
+  role_id       String       @db.VarChar(50)
+  permission_id String       @db.VarChar(50)
+  m_permission  m_permission @relation(fields: [permission_id], references: [permission_id])
+  m_role        m_role       @relation(fields: [role_id], references: [role_id])
+
+  @@id([role_id, permission_id])
+}
+
+model m_shop {
+  shop_id      String        @id
+  shop_name    String
+  full_address String
+  m_user_shop  m_user_shop[]
+}
+
+model m_user {
+  user_id         Int               @id @default(autoincrement())
+  user_name       String            @db.VarChar(50)
+  user_fullname   String            @db.VarChar(250)
+  email           String            @db.VarChar(250)
+  user_password   String            @db.VarChar(250)
+  uuid            String            @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  m_user_position m_user_position[]
+  m_user_role     m_user_role[]
+  m_user_shop     m_user_shop[]
+}
+
+model m_user_position {
+  user_id     Int
+  position_id String
+  m_position  m_position @relation(fields: [position_id], references: [position_id])
+  m_user      m_user     @relation(fields: [user_id], references: [user_id])
+
+  @@id([user_id, position_id])
+}
+
+model m_user_role {
+  user_id Int
+  role_id String @db.VarChar(50)
+  m_role  m_role @relation(fields: [role_id], references: [role_id])
+  m_user  m_user @relation(fields: [user_id], references: [user_id])
+
+  @@id([user_id, role_id])
+}
+
+model m_user_shop {
+  user_id Int
+  shop_id String
+  m_shop  m_shop @relation(fields: [shop_id], references: [shop_id])
+  m_user  m_user @relation(fields: [user_id], references: [user_id])
+
+  @@id([user_id, shop_id])
+}
+
+model Account {
+  id                 Int       @id @default(autoincrement())
+  compoundId         String    @unique @map("compound_id")
+  userId             Int       @map("user_id")
+  providerType       String    @map("provider_type")
+  providerId         String    @map("provider_id")
+  providerAccountId  String    @map("provider_account_id")
+  refreshToken       String?   @map("refresh_token")
+  accessToken        String?   @map("access_token")
+  accessTokenExpires DateTime? @map("access_token_expires")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @default(now()) @map("updated_at")
+
+  @@index([providerAccountId], name: "providerAccountId")
+  @@index([providerId], name: "providerId")
+  @@index([userId], name: "userId")
+  @@map("accounts")
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  userId       Int      @map("user_id")
+  expires      DateTime
+  sessionToken String   @unique @map("session_token")
+  accessToken  String   @unique @map("access_token")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @default(now()) @map("updated_at")
+
+  @@map("sessions")
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @default(now()) @map("updated_at")
+
+  @@map("user")
+}
+
+model VerificationRequest {
+  id         Int      @id @default(autoincrement())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @default(now()) @map("updated_at")
+
+  @@map("verification_requests")
+}

@@ -1,0 +1,13 @@
+{
+  "index": {
+    "title": "Astro - Cà phê ủ lạnh ngay đây",
+    "description": "Pha cà phê lạnh, còn được gọi là chiết xuất nước lạnh hoặc ép lạnh, là quá trình ngâm bã cà phê trong nước ở nhiệt độ mát trong một thời gian dài. Đậu xay thô ngâm nước khoảng 12 đến 24 tiếng.",
+    "appName": "Astro Coffee vi"
+  },
+  "signIn": {
+    "userName": "Username",
+    "password": "Password",
+    "signIn": "Sign In",
+    "forgotPassword": "Forgot pssword"
+  }
+}

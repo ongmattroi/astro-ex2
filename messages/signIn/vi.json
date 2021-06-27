@@ -1,0 +1,8 @@
+{
+  "label": {
+    "userName": "Username",
+    "password": "Password",
+    "signIn": "Sign In",
+    "forgotPassword": "Forgot password"
+  }
+}

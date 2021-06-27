@@ -1,0 +1,13 @@
+{
+  "index": {
+    "title": "Astro Coldbrew Coffee",
+    "description": "Cold brewing, also called cold water extraction or cold pressing, is the process of steeping coffee grounds in water at cool temperatures for an extended period. Coarse-ground beans are soaked in water for about 12 to 24 hours",
+    "appName": "Astro Coffee en"
+  },
+  "signIn": {
+    "userName": "Username",
+    "password": "Password",
+    "signIn": "Sign In",
+    "forgotPassword": "Forgot pssword"
+  }
+}
